@@ -1,37 +1,42 @@
-import express from 'express';
-import { PrismaClient } from '@prisma/client';
-import dotenv from 'dotenv';
-import cors from 'cors';
-
+import express from "express";
+import cors from "cors";
+import { PrismaClient } from "@prisma/client";
+import dotenv from "dotenv";
 dotenv.config();
+
 const prisma = new PrismaClient();
 const app = express();
-
 app.use(cors());
 
-app.get('/api/transactions', async (req, res) => {
-  const { type, limit = 50 } = req.query;
-  const where = type ? { type } : {};
+/*  Generic fetch by type */
+function listByType(type) {
+  return prisma.transaction.findMany({
+    where: { type },
+    orderBy: { timestamp: "desc" },
+    take: 100,
+  });
+}
 
+/* Individual routes per category */
+app.get("/api/transactions/incoming",  async (_, res) => res.json(await listByType("INCOMING")));
+app.get("/api/transactions/p2p",       async (_, res) => res.json(await listByType("P2P_TRANSFER")));
+app.get("/api/transactions/withdrawal",async (_, res) => res.json(await listByType("WITHDRAWAL")));
+app.get("/api/transactions/bundle",    async (_, res) => res.json(await listByType("BUNDLE_PURCHASE")));
+app.get("/api/transactions/airtime",   async (_, res) => res.json(await listByType("AIRTIME")));
+app.get("/api/transactions/bank",      async (_, res) => res.json(await listByType("BANK_DEPOSIT")));
+
+/* Generic endpoint with query params */
+app.get("/api/transactions", async (req, res) => {
+  const { type, limit = 100 } = req.query;
+  const where = type ? { type } : {};
   const data = await prisma.transaction.findMany({
     where,
-    orderBy: { timestamp: 'desc' },
+    orderBy: { timestamp: "desc" },
     take: parseInt(limit),
   });
-
   res.json(data);
 });
 
-app.get('/api/summary/by-type', async (req, res) => {
-  const summary = await prisma.$queryRaw`
-    SELECT type, COUNT(*) AS count, SUM(amount)::int AS total
-    FROM "Transaction"
-    GROUP BY type
-    ORDER BY total DESC
-  `;
-  res.json(summary);
-});
-
-app.listen(3000, () => {
-  console.log('API listening on http://localhost:3000');
-});
+/* ✅ Server start */
+const PORT = process.env.PORT || 3002;
+app.listen(PORT, () => console.log(`🚀 API running on http://localhost:${PORT}`));

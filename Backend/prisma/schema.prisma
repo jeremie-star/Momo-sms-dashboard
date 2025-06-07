@@ -8,16 +8,17 @@ datasource db {
 }
 
 model Transaction {
-  id               Int       @id @default(autoincrement())
-  txId             String?   @unique
-  type             String
-  amount           Int
-  fee              Int?      @default(0)
-  counterparty     String?   // e.g. Jane Doe, MTN Rwanda
-  msisdn           String?   // phone number, optional
-  channel          String?   // AGENT, USSD, BANK, etc.
-  timestamp        DateTime
-  rawBody          String
-  createdAt        DateTime  @default(now())
+  id           Int      @id @default(autoincrement())
+  txId         String?  @unique
+  type         String
+  amount       Int
+  fee          Int?     @default(0)
+  balance      Int?
+  counterparty String?
+  msisdn       String?
+  channel      String?  // AGENT, USSD, BANK, …
+  timestamp    DateTime
+  rawBody      String
+  createdAt    DateTime @default(now())
 }
 
