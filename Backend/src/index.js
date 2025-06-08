@@ -39,4 +39,4 @@ app.get("/api/transactions", async (req, res) => {
 
 /* ✅ Server start */
 const PORT = process.env.PORT || 3002;
-app.listen(PORT, () => console.log(`🚀 API running on http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`API running on http://localhost:${PORT}`));

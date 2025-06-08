@@ -24,7 +24,7 @@ const CATEGORIES = [
     }),
   },
 
-//   Classic “payment to code holder” (Date|at) 
+// Classic “payment to code holder” (Date|at) 
   {
     type: "P2P_TRANSFER",
     regex:
@@ -110,7 +110,7 @@ const CATEGORIES = [
   },
 ];
 
-//  ENRICHMENT HELPER  
+// 2. ENRICHMENT HELPER  
 
 function enrich(data, body) {
   // tx-ID (fallback)
@@ -174,7 +174,7 @@ async function run() {
         if (err.code === "P2002") {
           console.warn(`Skipped duplicate txId ${txData.txId}`);
         } else {
-          throw err; // unexpected DB error
+          throw err; 
         }
       }
 
