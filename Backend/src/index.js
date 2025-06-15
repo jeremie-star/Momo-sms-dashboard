@@ -13,7 +13,7 @@ function listByType(type) {
   return prisma.transaction.findMany({
     where: { type },
     orderBy: { timestamp: "desc" },
-    take: 100,
+    take: 1000,
   });
 }
 
@@ -27,7 +27,7 @@ app.get("/api/transactions/bank",      async (_, res) => res.json(await listByTy
 
 /* Generic endpoint with query params */
 app.get("/api/transactions", async (req, res) => {
-  const { type, limit = 100 } = req.query;
+  const { type, limit = 1000 } = req.query;
   const where = type ? { type } : {};
   const data = await prisma.transaction.findMany({
     where,
@@ -37,6 +37,5 @@ app.get("/api/transactions", async (req, res) => {
   res.json(data);
 });
 
-/* ✅ Server start */
 const PORT = process.env.PORT || 3002;
 app.listen(PORT, () => console.log(`API running on http://localhost:${PORT}`));
