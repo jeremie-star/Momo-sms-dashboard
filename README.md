@@ -86,7 +86,7 @@ create .env =(NEXT_PUBLIC_API_URL=http://localhost:3002) on /gwamo-na-mtn
 
 Your API will be available at http://localhost:3002/api/transactions.
 
-🔌 API Endpoints
+###🔌 API Endpoints
 Endpoint	Purpose
 GET /api/transactions	Fetch all transactions
 GET /api/transactions?type=INCOMING	Filter by transaction type
@@ -99,7 +99,7 @@ GET /api/transactions/bank	Bank deposits
 
 All responses are returned in JSON.
 
-🧩 Frontend Setup (Next.js)
+###🧩 Frontend Setup (Next.js)
 Tech Stack
 Next.js
 
@@ -136,7 +136,7 @@ export async function fetchTransactions(type) {
   const res = await fetch(url);
   return res.json();
 }
-📊 Sample Data Schema
+###📊 Sample Data Schema
 Field	Description
 id	Unique auto-increment ID
 txId	Transaction ID (if present)
@@ -150,7 +150,7 @@ channel	USSD, AGENT, BANK
 timestamp	Date and time of transaction
 rawBody	Full original SMS text
 
-📝 How It Works (ETL Summary)
+###📝 How It Works (ETL Summary)
 Parses an XML file of 1600+ SMS messages
 Categorizes SMS using regex patterns (7+ types supported)
 Extracts structured data fields like amount, date, txId, etc.
