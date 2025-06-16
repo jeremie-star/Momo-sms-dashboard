@@ -82,6 +82,8 @@ bash
 Copy
 Edit
 node src/index.js
+create .env =(NEXT_PUBLIC_API_URL=http://localhost:3002) on /gwamo-na-mtn
+
 Your API will be available at http://localhost:3002/api/transactions.
 
 🔌 API Endpoints
@@ -113,7 +115,7 @@ Folder Suggestions
 pgsql
 Copy
 Edit
-frontend/
+gwamo-na-mtn/
 ├── app/
 │   ├── page.tsx                  # Summary dashboard
 │   ├── globals.css
@@ -129,7 +131,7 @@ Example API Call in Frontend
 // utils/api.ts
 export async function fetchTransactions(type) {
   const url = type
-    : `http://localhost:3001/api/transactions`;
+    : `http://localhost:3002/api/transactions`;
 
   const res = await fetch(url);
   return res.json();
@@ -156,3 +158,5 @@ Saves to PostgreSQL via Prisma
 Skips duplicate txId entries automatically
 Provides clean API for frontend to consume
 
+###Demo video
+Link: https://drive.google.com/file/d/1s4Js7U59P_iHYTbHSjVhpHtWnTTZsGEX/view?usp=sharing
